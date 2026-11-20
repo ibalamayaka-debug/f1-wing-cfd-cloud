@@ -1,0 +1,35 @@
+{
+  "drs_closed": {
+    "Cl_downforce": 1.9612,
+    "Cd_drag": 0.5231,
+    "L_over_D": 3.749,
+    "downforce_N": 2943.1,
+    "downforce_kgf": 300.0,
+    "drag_N": 785.0,
+    "speed_kmh": 252.0,
+    "iterations": 220,
+    "n_cells": 178768,
+    "mesh_sec": 56.3,
+    "solve_sec": 214.8,
+    "total_sec": 274.6
+  },
+  "drs_open": {
+    "Cl_downforce": 1.0324,
+    "Cd_drag": 0.1671,
+    "L_over_D": 6.179,
+    "downforce_N": 1549.2,
+    "downforce_kgf": 157.9,
+    "drag_N": 250.7,
+    "speed_kmh": 252.0,
+    "iterations": 220,
+    "n_cells": 179940,
+    "mesh_sec": 54.4,
+    "solve_sec": 218.3,
+    "total_sec": 276.2
+  },
+  "drs_effect": {
+    "drag_reduction_pct": 68.1,
+    "downforce_reduction_pct": 47.4,
+    "drag_saved_N": 534.3
+  }
+}
