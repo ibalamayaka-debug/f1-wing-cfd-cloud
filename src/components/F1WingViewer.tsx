@@ -126,7 +126,7 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
     let disposed = false;
 
     const genericRW = vtkGenericRenderWindow.newInstance({
-      background: [0.032, 0.038, 0.056],
+      background: [0.105, 0.082, 0.066],
     });
     genericRW.setContainer(el);
     genericRW.resize();
@@ -218,11 +218,11 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
         text: '+X',
         fontStyle: 'bold',
         fontFamily: 'Inter, system-ui, sans-serif',
-        fontColor: '#f8fafc',
+        fontColor: '#fdf6ee',
         fontSizeScale: (res: number) => res / 2.2,
-        faceColor: '#151924',
+        faceColor: '#2a2019',
         edgeThickness: 0.12,
-        edgeColor: '#00d2be',
+        edgeColor: '#f59e0b',
         resolution: 256,
       });
       cube.setXPlusFaceProperty({ text: 'AFT' });

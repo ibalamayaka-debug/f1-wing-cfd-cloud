@@ -5,6 +5,8 @@ import {
   Eye,
   Flame,
   Gauge,
+  PanelLeftClose,
+  PanelLeftOpen,
   TrendingUp,
   Wind,
   Zap,
@@ -36,6 +38,7 @@ interface AeroSummary {
 
 export const App: React.FC = () => {
   const [lang, setLang] = useState<Lang>(detectInitialLang);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [drsMode, setDrsMode] = useState<DrsMode>('drs_closed');
   const [speedKmh, setSpeedKmh] = useState<number>(252);
   const [summary, setSummary] = useState<AeroSummary | null>(null);
@@ -75,7 +78,7 @@ export const App: React.FC = () => {
   const dragN = active ? active.drag_N * speedScale : 0;
 
   return (
-    <div className="app-layout">
+    <div className={`app-layout ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
       <aside className="sidebar">
         <div className="brand">
           <div className="brand-top">
@@ -272,46 +275,56 @@ export const App: React.FC = () => {
 
       <main className="workspace">
         <header className="kpi-bar">
-          <div className="kpi-card">
-            <div className="kpi-label">
-              <ArrowDown size={14} /> {t.kpiDownforce}
+          <button
+            type="button"
+            className="collapse-btn"
+            onClick={() => setSidebarOpen((v) => !v)}
+            title={sidebarOpen ? (lang === 'zh' ? '收起侧边栏' : 'Hide sidebar') : (lang === 'zh' ? '展开侧边栏' : 'Show sidebar')}
+          >
+            {sidebarOpen ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
+          </button>
+          <div className="kpi-grid">
+            <div className="kpi-card">
+              <div className="kpi-label">
+                <ArrowDown size={14} /> {t.kpiDownforce}
+              </div>
+              <div className="kpi-value cyan">
+                {active ? `${downforceKgf.toFixed(0)} kgf (${downforceN.toFixed(0)} N)` : '--'}
+              </div>
             </div>
-            <div className="kpi-value cyan">
-              {active ? `${downforceKgf.toFixed(0)} kgf (${downforceN.toFixed(0)} N)` : '--'}
+            <div className="kpi-card">
+              <div className="kpi-label">
+                <Wind size={14} /> {t.kpiDrag}
+              </div>
+              <div className="kpi-value orange">
+                {active ? `${dragN.toFixed(0)} N` : '--'}
+              </div>
             </div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-label">
-              <Wind size={14} /> {t.kpiDrag}
+            <div className="kpi-card">
+              <div className="kpi-label">
+                <Gauge size={14} /> {t.kpiClCd}
+              </div>
+              <div className="kpi-value">
+                {active
+                  ? `CL ${active.Cl_downforce.toFixed(2)} / CD ${active.Cd_drag.toFixed(2)}`
+                  : '--'}
+              </div>
             </div>
-            <div className="kpi-value orange">
-              {active ? `${dragN.toFixed(0)} N` : '--'}
+            <div className="kpi-card">
+              <div className="kpi-label">
+                <TrendingUp size={14} /> {t.kpiEfficiency}
+              </div>
+              <div className="kpi-value">
+                {active ? `${active.L_over_D.toFixed(2)} : 1` : '--'}
+              </div>
             </div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-label">
-              <Gauge size={14} /> {t.kpiClCd}
-            </div>
-            <div className="kpi-value">
-              {active
-                ? `CL ${active.Cl_downforce.toFixed(2)} / CD ${active.Cd_drag.toFixed(2)}`
-                : '--'}
-            </div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-label">
-              <TrendingUp size={14} /> {t.kpiEfficiency}
-            </div>
-            <div className="kpi-value">
-              {active ? `${active.L_over_D.toFixed(2)} : 1` : '--'}
-            </div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-label">
-              <Cpu size={14} /> {t.kpiMesh}
-            </div>
-            <div className="kpi-value">
-              {active ? `${(active.n_cells * 2).toLocaleString()} ${t.meshUnit}` : '--'}
+            <div className="kpi-card">
+              <div className="kpi-label">
+                <Cpu size={14} /> {t.kpiMesh}
+              </div>
+              <div className="kpi-value">
+                {active ? `${(active.n_cells * 2).toLocaleString()} ${t.meshUnit}` : '--'}
+              </div>
             </div>
           </div>
         </header>
