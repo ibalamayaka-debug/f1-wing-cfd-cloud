@@ -71,6 +71,8 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
   view,
 }) => {
   const t = TRANSLATIONS[lang];
+  const langRef = useRef<Lang>(lang);
+  langRef.current = lang;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const sceneRef = useRef<F1SceneHandle | null>(null);
   const viewRef = useRef<F1ViewState>(view);
@@ -289,7 +291,7 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
     let cancelled = false;
 
     const loadMode = async () => {
-      setStatus(TRANSLATIONS[lang].loading);
+      setStatus(TRANSLATIONS[langRef.current].loading);
       try {
         const [wingBuf, streamBuf, sliceBuf] = await Promise.all([
           fetchCachedVtp(`/data/${drsMode}_wing.vtp`),
@@ -316,7 +318,7 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
         setStatus('');
       } catch (err) {
         if (!cancelled) {
-          setStatus(`${TRANSLATIONS[lang].errorPrefix}${(err as Error).message}`);
+          setStatus(`${TRANSLATIONS[langRef.current].errorPrefix}${(err as Error).message}`);
         }
       }
     };
@@ -325,7 +327,7 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
     return () => {
       cancelled = true;
     };
-  }, [drsMode, lang, applyView, setCameraPreset]);
+  }, [drsMode, applyView, setCameraPreset]);
 
   // 3. Live layer toggles
   useEffect(() => {
@@ -362,9 +364,9 @@ export const F1WingViewer: React.FC<F1WingViewerProps> = ({
             </div>
             <div className="colorbar-strip" style={{ background: CP_GRADIENT }} />
             <div className="colorbar-ticks">
-              <span>-2.0 (Suction)</span>
+              <span>{t.colorbarSuction}</span>
               <span>-0.5</span>
-              <span>+1.0 (Stag)</span>
+              <span>{t.colorbarStag}</span>
             </div>
           </div>
         )}

@@ -5,7 +5,6 @@ import {
   Eye,
   Flame,
   Gauge,
-  Globe,
   TrendingUp,
   Wind,
   Zap,
@@ -81,14 +80,22 @@ export const App: React.FC = () => {
         <div className="brand">
           <div className="brand-top">
             <div className="brand-badge">{t.badge}</div>
-            <button
-              type="button"
-              className="lang-toggle"
-              onClick={() => setLang((p) => (p === 'zh' ? 'en' : 'zh'))}
-            >
-              <Globe size={12} />
-              <span>{lang === 'zh' ? 'EN' : '中文'}</span>
-            </button>
+            <div className="lang-switch" role="group" aria-label="Language">
+              <button
+                type="button"
+                className={lang === 'zh' ? 'active' : ''}
+                onClick={() => setLang('zh')}
+              >
+                中文
+              </button>
+              <button
+                type="button"
+                className={lang === 'en' ? 'active' : ''}
+                onClick={() => setLang('en')}
+              >
+                EN
+              </button>
+            </div>
           </div>
           <h1>{t.title}</h1>
           <p>{t.subtitle}</p>
@@ -304,7 +311,7 @@ export const App: React.FC = () => {
               <Cpu size={14} /> {t.kpiMesh}
             </div>
             <div className="kpi-value">
-              {active ? `${(active.n_cells * 2).toLocaleString()} hex` : '--'}
+              {active ? `${(active.n_cells * 2).toLocaleString()} ${t.meshUnit}` : '--'}
             </div>
           </div>
         </header>

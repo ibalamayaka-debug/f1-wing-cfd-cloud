@@ -3,6 +3,9 @@ export type DrsMode = 'drs_closed' | 'drs_open';
 
 export function detectInitialLang(): Lang {
   try {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('lang');
+    if (q === 'zh' || q === 'en') return q;
     const saved = localStorage.getItem('f1wing_lang');
     if (saved === 'zh' || saved === 'en') return saved;
   } catch {
@@ -16,14 +19,14 @@ export function detectInitialLang(): Lang {
 
 export const TRANSLATIONS = {
   zh: {
-    pageTitle: 'Albert Park F1 Wing CFD — 墨尔本 F1 尾翼 3D 气动实验室',
+    pageTitle: '墨尔本 Albert Park F1 尾翼 3D 气动实验室',
     badge: '墨尔本 Albert Park GP · OpenFOAM v2512',
-    title: 'F1 Rear Wing CFD',
+    title: 'F1 尾翼 3D 气动仿真',
     subtitle: '多段式尾翼下压力、DRS 减阻与 3D 翼尖涡流线仿真',
     sectionDrs: 'DRS 空气动力学模式',
-    drsClosed: 'DRS 关闭 (高下压力)',
+    drsClosed: 'DRS 关闭（高下压力）',
     drsClosedSub: '弯道模式 · 42° 襟翼',
-    drsOpen: 'DRS 开启 (直道超车)',
+    drsOpen: 'DRS 开启（直道超车）',
     drsOpenSub: '减阻模式 · 8° 襟翼',
     drsGainTitle: 'DRS 实测气动收益',
     dragReduction: '风阻降低',
@@ -43,16 +46,19 @@ export const TRANSLATIONS = {
     streamRadius: '流线管径',
     sliceOpacity: '截面透明度',
     footerNote: '基于真实 OpenFOAM snappyHexMesh + simpleFoam (k-ω SST) 求解',
-    kpiDownforce: '全翼下压力 (Downforce)',
-    kpiDrag: '总气动阻力 (Drag)',
+    kpiDownforce: '全翼下压力',
+    kpiDrag: '总气动阻力',
     kpiClCd: '气动系数 CL / CD',
     kpiEfficiency: '气动效率 L/D',
-    kpiMesh: '3D 网格规模 (全翼等效)',
+    kpiMesh: '3D 网格规模（全翼）',
+    meshUnit: '六面体',
     camIso: '3D 赛场视角',
     camWake: '尾流翼尖涡',
     camSide: '侧面翼型 XZ',
     camTop: '俯视图 XY',
     colorbarWing: '翼面压力系数 Cp',
+    colorbarSuction: '-2.0 (低压吸力)',
+    colorbarStag: '+1.0 (高压驻点)',
     colorbarFlow: '流线/截面流速 |U|',
     hint: '左键 360° 旋转 · 滚轮缩放 · Shift+左键平移',
     loading: '正在加载 OpenFOAM 3D 尾翼与流线 (.vtp)...',
@@ -91,11 +97,14 @@ export const TRANSLATIONS = {
     kpiClCd: 'Aero Coeffs CL / CD',
     kpiEfficiency: 'Aero Efficiency L/D',
     kpiMesh: '3D Mesh Scale (Full Span)',
+    meshUnit: 'hex',
     camIso: '3D Pit-Wall',
     camWake: 'Rear Vortices',
     camSide: 'Side Airfoil XZ',
     camTop: 'Top View XY',
     colorbarWing: 'Wing Surface Pressure Cp',
+    colorbarSuction: '-2.0 (Suction)',
+    colorbarStag: '+1.0 (Stag)',
     colorbarFlow: 'Streamline Velocity |U|',
     hint: 'Drag: 360° Orbit · Scroll: Zoom · Shift+Drag: Pan',
     loading: 'Loading OpenFOAM 3D Wing & Streamlines (.vtp)...',
